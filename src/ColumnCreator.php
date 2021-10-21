@@ -15,6 +15,8 @@ final class ColumnCreator
         $lastGroup = '';
         $finishedGroups = [];
 
+        ['time', 'time', 'memory', 'time'];
+
         foreach ($columnDefinitions as $colDef) {
             if ($lastGroup === '') {
                 $lastGroup = $colDef->columnGroup;
@@ -26,7 +28,8 @@ final class ColumnCreator
 
             if (in_array($colDef->columnGroup, $finishedGroups, true)) {
                 throw new Exception(
-                    sprintf('Consecutiveness violation detected: There is a duplicate group name "%s" specified in lib/Extension/config/report/generators.php', $colDef->columnGroup));
+                    sprintf('A group for "%s" has already been created, and we encountered a duplicate group "%s" in "group"', $colDef->columnGroup, $lastGroup)
+                );
             }
 
             if (array_key_exists($colDef->columnGroup, $groups)) {
