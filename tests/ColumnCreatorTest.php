@@ -7,6 +7,7 @@ namespace Tests;
 use ColumnCreator;
 use ColumnDefinition;
 use ColumnGroup;
+use Exception;
 use Generator;
 use PHPUnit\Framework\TestCase;
 
@@ -48,5 +49,21 @@ final class ColumnCreatorTest extends TestCase
                 new ColumnGroup('memory', 2)
             ],
         ];
+    }
+
+    public function test_it_throws_an_exception_if_a_repeated_group_occurs(): void
+    {
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage('Consecutiveness violation detected: There is a duplicate group name "time" specified');
+
+        (new ColumnCreator)->create(
+            [
+                new ColumnDefinition('php71', 'time'),
+                new ColumnDefinition('php74', 'time'),
+                new ColumnDefinition('php71', 'memory'),
+                new ColumnDefinition('php74', 'memory'),
+                new ColumnDefinition('php81', 'time'),
+            ]
+        );
     }
 }
