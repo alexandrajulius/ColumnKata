@@ -54,7 +54,7 @@ final class ColumnCreatorTest extends TestCase
     public function test_it_throws_an_exception_if_a_repeated_group_occurs(): void
     {
         $this->expectException(Exception::class);
-        $this->expectExceptionMessage('Consecutiveness violation detected: There is a duplicate group name "time" specified in lib/Extension/config/report/generators.php');
+        $this->expectExceptionMessage('A group for "time" has already been created, and we encountered a duplicate group "time" in "group"');
 
         (new ColumnCreator)->create(
             [
